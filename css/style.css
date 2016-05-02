@@ -1,0 +1,64 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #3498db;
+  overflow: hidden;
+}
+
+.rocketDiv {
+  width: 40px;
+  position: absolute;
+  bottom : 0px;
+  left: 400px;
+}
+
+.rocket {
+  width: 100%;
+}
+
+.rocketFlame {
+  transition: transform 1s;
+  position: absolute;
+  width: 100%;
+  top: 78px;
+  left: 0px;
+  z-index: -1;
+}
+
+.bullet {
+  position: absolute;
+  width: 3px;
+  height: 15px;
+  background-color: white;
+  transition: left 0.1s, bottom 0.1s;
+  z-index: -1;
+}
+
+.enemy {
+  transition: transform 0.4s;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  color: white;
+  font-size: 25px;
+  z-index: 1;
+}
+
+.explosion {
+  width: 100%;
+}
+
+.scoreCount {
+  position: absolute;
+  top: 250px;
+  width: 100vw;
+  height: 50vh;
+  font-size: 200px;
+  font-family: "Montserrat";
+  text-align: center;
+  color: rgba(0, 0, 0, 0.08);
+}
