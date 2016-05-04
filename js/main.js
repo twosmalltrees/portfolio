@@ -44,17 +44,122 @@ Rocket = {
   },
 
   fireWeapon: function() {
-      var bullet = Guns.bulletFactory("laser");
-      var fireRate = bullet.fireRate;
-      var currentTime = new Date();
-      if (currentTime - this.lastBulletFired > fireRate) {
-        $('body').append(bullet.image);
-        this.lastBulletFired = currentTime;
-        World.projectiles.push(bullet);
-      }
+    var bullet = Guns.bulletFactory("laser");
+    var fireRate = bullet.fireRate;
+    var currentTime = new Date();
+    if (currentTime - this.lastBulletFired > fireRate) {
+      $('body').append(bullet.image);
+      this.lastBulletFired = currentTime;
+      World.projectiles.push(bullet);
+    }
   }
 };
 
+
+///////// ------------ THE PROJECTS ------------ ////////
+
+Project = {
+  // Creates a new enemy
+  projectFactory: function(name) {
+
+    var project = {
+      position: [],
+      velocity: 0.5,
+      direction: 0,
+      rotation: 0,
+      hits: 0,
+      size: 40,
+      projectName: name,
+      contentDivId: name,
+      element: null
+    };
+
+    // Get randomised spawn conditions
+    var spawnConditions = World.randomSpawnCondition();
+
+    // Assign initial direction
+    project.direction = spawnConditions.direction;
+    project.position = spawnConditions.position;
+
+    // Create a dom_element for the project to append to DOM based on conditions provided
+
+    project.element = $("<div>");
+    project.element.addClass("projectIcon " + name);
+
+
+    // Attach position to the CSS
+    project.element.css({
+      'left': project.position[0] + "px",
+      'top': project.position[1] + "px",
+    });
+
+    // Append the project to the DOM
+    $('body').append(project.element);
+    return project;
+
+  },
+
+  wobble: function(project) {
+
+    // If project has already been hit 3 times, expand ball.
+    if (project.hits === 3) {
+      this.expandBlob(project);
+    } else {
+      project.size += 30;
+
+      $(project.element).css({
+        'width': project.size + 'px',
+        'height': project.size + 'px',
+        'transform': 'scale(1.3) scaleX(1.2)',
+      });
+      setTimeout(function() {
+        $(project.element).css({
+          'transform': 'scaleX(1)',
+        });
+      }, 180);
+      setTimeout(function() {
+        $(project.element).css({
+          'transform': 'scaleY(1.15)',
+        });
+      }, 400);
+      setTimeout(function() {
+        $(project.element).css({
+          'transform': 'scaleY(1)',
+        });
+      }, 600);
+
+      project.hits += 1;
+
+    }
+  },
+
+  expandBlob: function(project) {
+    var windowWidth = $(window).width();
+    var scale;
+
+    if (windowWidth > 3000) {
+      scale = 80;
+    } else {
+      scale = 50;
+    }
+
+    $(project.element).css({
+      'z-index': '10000000000000000',
+      'transform': 'scale(' + scale + ')'
+    });
+
+    project.size = 40;
+    project.hits = 0;
+
+    setTimeout(function() {
+      (project.element).css({
+        'transform': 'scale(1)',
+        'width': project.size +'px',
+        'height': project.size +'px'
+      });
+    }, 2000);
+  }
+};
 
 ///////// ------------ THE ENEMIES ------------ ////////
 
@@ -79,34 +184,18 @@ Enemy = {
       enemy.image = $("<div class='enemy cross'><i class='fa fa-times'></i></i></div>");
     }
 
-    // Logic to work out random spawn locations
-    var sideRandomiser = World.getRandom();
-    var positionRandomiser = World.getRandom();
-    var directionRandomiser = World.getRandom();
+    var spawnConditions = World.randomSpawnCondition();
 
-    // Chooses where to place enemy
-    if (sideRandomiser > 0.75) {
-      // Case One - Spawns from top
-      enemy.position = [($('body').width() * positionRandomiser), 0];
-      enemy.direction = (90 * directionRandomiser);
-    } else if (sideRandomiser > 0.5) {
-      // Case Two - Spawns from right
-      enemy.position = [$('body').width(), ($('body').height() * positionRandomiser)];
-      enemy.direction = (180 + (180 * directionRandomiser));
-    } else if (sideRandomiser > 0.25) {
-      // Case Three - Spawns from bottom
-      enemy.position = [($('body').width() * positionRandomiser), $('body').height()];
-      enemy.direction = (270 + (180 * directionRandomiser));
-    } else {
-      // Case Four - Spawns from left
-      enemy.position = [0, ($('body').height() * positionRandomiser)];
-      enemy.direction = (180 * directionRandomiser);
-    }
+    // Assign initial direction
+    enemy.direction = spawnConditions.direction;
+    enemy.position = spawnConditions.position;
+
     // Attach position to the CSS
     enemy.image.css({
       'left': enemy.position[0] + "px",
       'top': enemy.position[1] + "px",
     });
+
     // Append the enemy to the DOM
     $('body').append(enemy.image);
     return enemy;
@@ -161,6 +250,8 @@ World = {
   enemies: [],
   // Stores a collection of bullets.
   projectiles: [],
+  // Store a collection of the projects.
+  projects: [],
   // Stores the current score.
   score: 0,
   // Sets up an interval to call renderPage every 40ms (25fps);
@@ -182,11 +273,11 @@ World = {
       for (var m = 0; m < World.projectiles.length; m++) {
         if (World.enemies[k]) { // This loop is important, prevents from attempting to check collisions on World.enemies[k] if it was the most recently generated enemy and has been hit and destroyed already, and therefore World.enemies[k] no longer exists.
           var thisEnemy = World.enemies[k];
-          var enemyXPos = thisEnemy.image.offset().left + (thisEnemy.size/2);
-          var enemyYPos = thisEnemy.image.offset().top + (thisEnemy.size/2);
+          var enemyXPos = thisEnemy.image.offset().left + (thisEnemy.size / 2);
+          var enemyYPos = thisEnemy.image.offset().top + (thisEnemy.size / 2);
           var thisBullet = World.projectiles[m];
-          var bulletXPos = thisBullet.image.offset().left + (thisBullet.width/2);
-          var bulletYPos = thisBullet.image.offset().top + (thisBullet.width/2);
+          var bulletXPos = thisBullet.image.offset().left + (thisBullet.width / 2);
+          var bulletYPos = thisBullet.image.offset().top + (thisBullet.width / 2);
           var bulletRadius = 5;
           var enemyRadius = 12.5;
 
@@ -208,6 +299,35 @@ World = {
       }
     }
 
+    // DETECT COLLISIONS FOR PROJECTS - loop through World.projectiles and World.enemies and check collisions.
+    // Thanks to MDN for this collision detection algorithm.
+    for (var i = 0; i < World.projects.length; i++) {
+      for (var j = 0; j < World.projectiles.length; j++) {
+        if (World.projects[i]) { // This loop is important, prevents from attempting to checi collisions on World.projects[i] if it was the most recently generated enemy and has been hit and destroyed already, and therefore World.projects[i] no longer exists.
+          var thisProject = World.projects[i];
+          var projectXPos = thisProject.element.offset().left + (thisProject.size / 2);
+          var projectYPos = thisProject.element.offset().top + (thisProject.size / 2);
+          var thatBullet = World.projectiles[j];
+          var thatBulletXPos = thatBullet.image.offset().left + (thatBullet.width / 2);
+          var thatBulletYPos = thatBullet.image.offset().top + (thatBullet.width / 2);
+          var thatBulletRadius = 5;
+          var projectRadius = thisProject.size / 2;
+
+          var dxx = projectXPos - thatBulletXPos;
+          var dyy = projectYPos - thatBulletYPos;
+          var theDistance = Math.sqrt(dxx * dxx + dyy * dyy);
+
+          if (theDistance < thatBulletRadius + projectRadius) {
+            Project.wobble(thisProject);
+            thatBullet.image.css({
+              'display': 'none'
+            });
+            World.projectiles.splice(j, 1);
+          }
+        }
+      }
+    }
+
     // ROCKET - checks and update the position of the rocket
     var rocket_image_div = Rocket.image;
     var velocity_components = World.breakDownVelocity(Rocket.velocity, Rocket.direction);
@@ -217,7 +337,7 @@ World = {
     // Allows for flyThrough walls on X axis
     if (Rocket.position[0] < -150) {
       Rocket.position[0] = $(window).width() + ((Rocket.position[0] + velocity_components[0] + 150) % $(window).width());
-    } else if (Rocket.position[0] > $(window).width() + 50){
+    } else if (Rocket.position[0] > $(window).width() + 50) {
       console.log("to right");
       Rocket.position[0] = ((Rocket.position[0] + velocity_components[0]) % $(window).width()) - 150;
     } else {
@@ -227,7 +347,7 @@ World = {
     // Allows for flyThrough floor/ceiling on Y axis
     if (Rocket.position[1] < -150) {
       Rocket.position[1] = $(window).height() + ((Rocket.position[1] + velocity_components[1] + 150) % $(window).height());
-    } else if (Rocket.position[1] > $(window).height() + 50){
+    } else if (Rocket.position[1] > $(window).height() + 50) {
       console.log("to right");
       Rocket.position[1] = ((Rocket.position[1] + velocity_components[1]) % $(window).height()) - 150;
     } else {
@@ -252,6 +372,7 @@ World = {
       if (bullet.lifetime < 150) {
         bullet.lifetime++;
       } else {
+        bullet_div.remove();
         World.projectiles.splice(i, 1);
         bullet.image.css({
           'display': 'none'
@@ -277,10 +398,79 @@ World = {
       });
       // Stop tracking enemies if they stray outside the screen
       if (enemy.position[0] < -50 || enemy.position[0] > $(window).width() + 50 || enemy.position[1] < -50 || enemy.position[1] > $(window).height + 50) {
+        enemy_div.remove();
         World.enemies.splice(j, 1);
       }
     }
+
+    // PROJECTS - check ans update the position of all the World.projects
+    for (var l = 0; l < World.projects.length; l++) {
+
+      var project = World.projects[l];
+      var project_div = project.image;
+      velocity_components = World.breakDownVelocity(project.velocity, project.direction);
+
+      // Allows for flyThrough walls on X axis
+      if (project.position[0] < -150) {
+        project.position[0] = $(window).width() + ((project.position[0] + velocity_components[0] + 150) % $(window).width());
+      } else if (project.position[0] > $(window).width() + 50) {
+        console.log("to right");
+        project.position[0] = ((project.position[0] + velocity_components[0]) % $(window).width()) - 150;
+      } else {
+        project.position[0] = project.position[0] + velocity_components[0];
+      }
+
+      // Allows for flyThrough floor/ceiling on Y axis
+      if (project.position[1] < -150) {
+        project.position[1] = $(window).height() + ((project.position[1] + velocity_components[1] + 150) % $(window).height());
+      } else if (project.position[1] > $(window).height() + 50) {
+        console.log("to right");
+        project.position[1] = ((project.position[1] + velocity_components[1]) % $(window).height()) - 150;
+      } else {
+        project.position[1] = project.position[1] + velocity_components[1];
+      }
+
+
+      project.element.css({
+        'left': project.position[0] + 'px',
+        'top': project.position[1] + 'px',
+      });
+
+    }
     window.requestAnimationFrame(World.renderPage);
+  },
+
+  randomSpawnCondition: function() {
+    // Logic to work out random spawn locations
+    var sideRandomiser = this.getRandom();
+    var positionRandomiser = this.getRandom();
+    var directionRandomiser = this.getRandom();
+
+    // Chooses where to place enemy
+    var position;
+    var direction;
+
+    if (sideRandomiser > 0.75) {
+      // Case One - Spawns from top
+      position = [($('body').width() * positionRandomiser), 0];
+      direction = (90 * directionRandomiser);
+    } else if (sideRandomiser > 0.5) {
+      // Case Two - Spawns from right
+      position = [$('body').width(), ($('body').height() * positionRandomiser)];
+      direction = (180 + (180 * directionRandomiser));
+    } else if (sideRandomiser > 0.25) {
+      // Case Three - Spawns from bottom
+      position = [($('body').width() * positionRandomiser), $('body').height()];
+      direction = (270 + (180 * directionRandomiser));
+    } else {
+      // Case Four - Spawns from left
+      position = [0, ($('body').height() * positionRandomiser)];
+      direction = (180 * directionRandomiser);
+    }
+    return {
+      position: position,
+      direction: direction
+    };
   },
 
   breakDownVelocity: function(velocity, direction) {
@@ -345,7 +535,7 @@ var UserInteraction = {
     }
     // Fire Laser!
     if (UserInteraction.keysPressed[32]) {
-        Rocket.fireWeapon();
+      Rocket.fireWeapon();
     }
     // Reduce rocket flame size on keyup, and set air resistance interval up again.
     if (UserInteraction.keysPressed[38] === false) {
@@ -371,6 +561,8 @@ $(document).ready(function() {
       }
     }, 2000);
   }, 1000);
+
+  World.projects.push(Project.projectFactory("gipht"), Project.projectFactory("ticTacToe"));
 
   $('.rocketDiv').append(Rocket.image);
 

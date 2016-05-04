@@ -16,6 +16,24 @@ body {
   left: 400px;
 }
 
+.projectIcon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 1000;
+  border: 5px solid white;
+  border-radius: 50%;
+  transition: transform 0.6s, width 0.4s, height 0.4s;
+}
+
+.gipht {
+  background-color: #42B942;
+}
+
+.ticTacToe {
+  background-color: orange;
+}
+
 .rocket {
   width: 100%;
 }
