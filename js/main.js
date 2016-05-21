@@ -48,7 +48,7 @@ Rocket = {
     var fireRate = bullet.fireRate;
     var currentTime = new Date();
     if (currentTime - this.lastBulletFired > fireRate) {
-      $('body').append(bullet.image);
+      $('#game-window').append(bullet.image);
       this.lastBulletFired = currentTime;
       World.projectiles.push(bullet);
     }
@@ -60,6 +60,7 @@ Rocket = {
 
 Project = {
   // Creates a new enemy
+  currentlyViewing: null,
   projectFactory: function(name) {
 
     var project = {
@@ -67,6 +68,7 @@ Project = {
       velocity: 0.5,
       direction: 0,
       rotation: 0,
+      isHittable: true,
       hits: 0,
       size: 40,
       projectName: name,
@@ -94,19 +96,13 @@ Project = {
     });
 
     // Append the project to the DOM
-    $('body').append(project.element);
+    $('#game-window').append(project.element);
     return project;
 
   },
 
   wobble: function(project) {
-
     // If project has already been hit 3 times, expand ball.
-    if (project.hits === 3) {
-      this.expandBlob(project);
-    } else {
-      project.size += 30;
-
       $(project.element).css({
         'width': project.size + 'px',
         'height': project.size + 'px',
@@ -126,21 +122,27 @@ Project = {
         $(project.element).css({
           'transform': 'scaleY(1)',
         });
+        project.isHittable = true;
       }, 600);
 
-      project.hits += 1;
 
-    }
   },
 
   expandBlob: function(project) {
+    this.currentlyViewing = project;
+    project.isHittable = false;
     var windowWidth = $(window).width();
     var scale;
-
     if (windowWidth > 3000) {
       scale = 80;
     } else {
       scale = 50;
+    }
+
+    if (project.projectName === "about-me") {
+      $(project.element).css({
+        "background-image": "none",
+      });
     }
 
     $(project.element).css({
@@ -148,16 +150,34 @@ Project = {
       'transform': 'scale(' + scale + ')'
     });
 
+    setTimeout(function() {
+      $('#main-content').show();
+      $('#' + Project.currentlyViewing.projectName ).fadeTo(1000, 1);
+    }, 1000);
+
     project.size = 40;
     project.hits = 0;
 
-    setTimeout(function() {
-      (project.element).css({
-        'transform': 'scale(1)',
-        'width': project.size +'px',
-        'height': project.size +'px'
-      });
-    }, 2000);
+  },
+
+  shrinkBlob: function(project) {
+    project.isHittable = true;
+    $(project.element).css({
+      'transform': 'scale(1)',
+      'width': project.size +'px',
+      'height': project.size +'px'
+    });
+
+    if (project.projectName === "about-me") {
+      console.log("about me shrink ran");
+      setTimeout(function() {
+        $(project.element).css({
+          'background-image': 'url(../portfolio/images/me.png)',
+        });
+      }, 450);
+    }
+
+    $('#' + Project.currentlyViewing.projectName ).hide();
   }
 };
 
@@ -197,7 +217,7 @@ Enemy = {
     });
 
     // Append the enemy to the DOM
-    $('body').append(enemy.image);
+    $('#game-window').append(enemy.image);
     return enemy;
   },
   explode: function(enemy) {
@@ -231,7 +251,7 @@ Guns = {
     // Set speed relative to spaceship based on type of bullet
     if (bullet.bulletType === "laser") {
       bullet.velocity += 10;
-      bullet.fireRate = 90;
+      bullet.fireRate = 130;
     }
     // Set starting position of bullet at spaceships location
     bullet.image.css({
@@ -318,7 +338,17 @@ World = {
           var theDistance = Math.sqrt(dxx * dxx + dyy * dyy);
 
           if (theDistance < thatBulletRadius + projectRadius) {
-            Project.wobble(thisProject);
+            if (thisProject.isHittable === true) {
+              if (thisProject.hits >= 3) {
+                thisProject.isHittable = false;
+                Project.expandBlob(thisProject);
+              } else if (thisProject.hits < 3) {
+                thisProject.isHittable = false;
+                thisProject.size += 30;
+                thisProject.hits += 1;
+                Project.wobble(thisProject);
+              }
+            }
             thatBullet.image.css({
               'display': 'none'
             });
@@ -331,8 +361,6 @@ World = {
     // ROCKET - checks and update the position of the rocket
     var rocket_image_div = Rocket.image;
     var velocity_components = World.breakDownVelocity(Rocket.velocity, Rocket.direction);
-
-    //TODO: Pull this out this to a seperate Wold.getPosition (or something) method so it can be used for enemies/bullets? etc...
 
     // Allows for flyThrough walls on X axis
     if (Rocket.position[0] < -150) {
@@ -403,18 +431,16 @@ World = {
       }
     }
 
-    // PROJECTS - check ans update the position of all the World.projects
+    // PROJECTS - check and update the position of all the World.projects
     for (var l = 0; l < World.projects.length; l++) {
 
       var project = World.projects[l];
       var project_div = project.image;
       velocity_components = World.breakDownVelocity(project.velocity, project.direction);
-
       // Allows for flyThrough walls on X axis
       if (project.position[0] < -150) {
         project.position[0] = $(window).width() + ((project.position[0] + velocity_components[0] + 150) % $(window).width());
       } else if (project.position[0] > $(window).width() + 50) {
-        console.log("to right");
         project.position[0] = ((project.position[0] + velocity_components[0]) % $(window).width()) - 150;
       } else {
         project.position[0] = project.position[0] + velocity_components[0];
@@ -424,7 +450,6 @@ World = {
       if (project.position[1] < -150) {
         project.position[1] = $(window).height() + ((project.position[1] + velocity_components[1] + 150) % $(window).height());
       } else if (project.position[1] > $(window).height() + 50) {
-        console.log("to right");
         project.position[1] = ((project.position[1] + velocity_components[1]) % $(window).height()) - 150;
       } else {
         project.position[1] = project.position[1] + velocity_components[1];
@@ -452,19 +477,19 @@ World = {
 
     if (sideRandomiser > 0.75) {
       // Case One - Spawns from top
-      position = [($('body').width() * positionRandomiser), 0];
+      position = [($('#game-window').width() * positionRandomiser), 0];
       direction = (90 * directionRandomiser);
     } else if (sideRandomiser > 0.5) {
       // Case Two - Spawns from right
-      position = [$('body').width(), ($('body').height() * positionRandomiser)];
+      position = [$('#game-window').width(), ($('#game-window').height() * positionRandomiser)];
       direction = (180 + (180 * directionRandomiser));
     } else if (sideRandomiser > 0.25) {
       // Case Three - Spawns from bottom
-      position = [($('body').width() * positionRandomiser), $('body').height()];
+      position = [($('#game-window').width() * positionRandomiser), $('#game-window').height()];
       direction = (270 + (180 * directionRandomiser));
     } else {
       // Case Four - Spawns from left
-      position = [0, ($('body').height() * positionRandomiser)];
+      position = [0, ($('#game-window').height() * positionRandomiser)];
       direction = (180 * directionRandomiser);
     }
     return {
@@ -547,26 +572,121 @@ var UserInteraction = {
   }
 };
 
+Welcome = {
+  showWelcome: function() {
+    $('.rocketDiv').append(Rocket.image).fadeTo(2000, 1);
+    $('#welcome-container').fadeTo(2000, 1, function() {
+      setTimeout(Welcome.showViewOptions(), 1500);
+    });
+
+  },
+
+  showViewOptions: function() {
+    $('.welcome-small-text').first().fadeTo(600, 0);
+    $('#welcome-container').css({'top':'29vh'});
+    $('#view-options').fadeIn();
+  },
+
+  showIntroSequence: function() {
+    // Will show the control intro when user selects to play the game
+    $('#welcome-message').fadeTo(500, 0, function() {
+      $('#welcome-message').hide();
+    });
+    // Fade in the controls image
+    setTimeout(function() {
+      $('#controls').fadeTo(500, 1);
+    }, 700);
+
+    setTimeout(function() {
+      $('#controls').fadeTo(500, 0, function() {
+        $('#controls').hide();
+      });
+    }, 3000);
+
+    Welcome.startGame();
+  },
+
+  showAllProjects: function() {
+    // $('#game-window').css({'overflow':'scroll'});
+    $('body').css({
+      "overflow-y": "scroll"
+    });
+    $('.close-project').hide();
+    $('.project-container').show();
+    $('#main-content').fadeTo(300, 1);
+  },
+
+  startGame: function() {
+    UserInteraction.addKeyboardListeners();
+    // Sets up spawn enemies interval
+    setTimeout(function() {
+      setInterval(function() {
+        if (World.enemies.length < 15) {
+          var enemy = Enemy.enemyFactory();
+          World.enemies.push(enemy);
+        }
+      }, 2000);
+    }, 1000);
+
+    if (World.projects.length === 0) {
+      World.projects.push(Project.projectFactory("gipht"),
+                          Project.projectFactory("tic-tac-toe"),
+                          Project.projectFactory("glance"),
+                          Project.projectFactory("contribute"),
+                          Project.projectFactory("spaced"),
+                          Project.projectFactory("about-me"));
+      World.start();
+    }
+
+    $('#game-window').fadeTo(1500, 1);
+  }
+
+};
 
 $(document).ready(function() {
-
-  UserInteraction.addKeyboardListeners();
-
-  // Sets up spawn enemies interval
   setTimeout(function() {
-    setInterval(function() {
-      if (World.enemies.length < 15) {
-        var enemy = Enemy.enemyFactory();
-        World.enemies.push(enemy);
-      }
-    }, 2000);
-  }, 1000);
+    Welcome.showWelcome();
+  }, 500);
 
-  World.projects.push(Project.projectFactory("gipht"), Project.projectFactory("ticTacToe"));
+  $('#start-game').on('click', function(){
+    Welcome.showIntroSequence();
+  });
 
-  $('.rocketDiv').append(Rocket.image);
+  $('#quick-view').on('click', function() {
+    Welcome.showAllProjects();
+  });
 
-
-  World.start();
-
+  // Listen for click on close buttons
+  $('.close-project').on('click', function() {
+    console.log("close project called");
+    $('#' + Project.currentlyViewing.projectName ).fadeTo(500, 0, function() {
+      $('#main-content').hide();
+      Project.shrinkBlob(Project.currentlyViewing, function() {});
+    });
+  });
 });
+
+// The Below Code Runs The Game On Page Ready... Re Implement Later
+
+// $(document).ready(function() {
+//
+//   UserInteraction.addKeyboardListeners();
+//
+//   // Sets up spawn enemies interval
+//   setTimeout(function() {
+//     setInterval(function() {
+//       if (World.enemies.length < 15) {
+//         var enemy = Enemy.enemyFactory();
+//         World.enemies.push(enemy);
+//       }
+//     }, 2000);
+//   }, 1000);
+//
+//   World.projects.push(Project.projectFactory("gipht"), Project.projectFactory("tic-tac-toe"));
+//
+//   $('.rocketDiv').append(Rocket.image);
+//
+//
+//   World.start();
+//
+// });

@@ -6,33 +6,199 @@
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/konpa/devicon/master/devicon.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <title>Harrison Reid</title>
   </head>
   <body>
-    <div class="scoreCount">0</div>
-    <div class="rocketDiv"></div>
 
-    <div class="mainContent">
-      <div id="ticTacToe" class="projectContainer hidden">
-          <!-- Content for tic tac toe goes here -->
+    <div id="welcome-container" hidden>
+      <div id="welcome-message">
+        <span class="welcome-small-text">you've stumbled upon the portolfio of</span>
+        <h1 class="welcome-big-text">HARRISON REID</h1>
+        <span class="welcome-small-text" >web developer</span>
+        <div id="view-options" hidden>
+          <span class="view-option-btn" id="start-game">fun view</span>
+          <span class="view-option-btn" id="quick-view">quick view</span>
+        </div>
       </div>
-
-      <div id="gipht" class="projectContainer hidden">
-          <!-- Content for gipht goes here -->
+      <div id="controls" hidden>
+        <img src="images/controls.svg">
       </div>
+      <div id="legend">
 
-      <div id="spaced" class="projectContainer hidden">
-          <!-- Content for spaced goes here -->
-      </div>
-
-      <div id="glance" class="projectContainer hidden">
-          <!-- Content for glance goes here -->
-      </div>
-
-      <div id="contribute" class="projectContainer hidden">
-          <!-- Content for contribute goes here -->
       </div>
     </div>
 
+    <div id="game-window" hidden>
+      <div class="scoreCount" hidden>0</div>
+      <div class="rocketDiv" style="opacity: 0"></div>
+    </div>
+
+    <div id="main-content" hidden>
+
+      <div id="about-me" class="project-container" hidden>
+        <div class="display-container">
+          <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
+          <img id="profile-image" src="images/face-bordered.png"><h2 id="my-name">Harrison Reid</h2>
+          <h3>about me</h3>
+          <p>
+            Hey there, I’m Harrison - a full stack web developer. I like writing code, get kicks out of good design, and love bringing the two together to create unique online experiences. I’ve recently graduated from from General Assembly Sydney, having studied the Web Development Immersive - a 3 month bootcamp style course learning web development all day every day. If you want to see the kind of work I’ve been doing, check out the projects below!
+          </p>
+          <h3>contact</h3>
+          <p>
+            I’m currently looking to find a position within a friendly, passionate team. A role that feeds my creative side, and keeps pushing my development as a programmer. If you've got anything available, please feel free to get in touch with me through any of the methods below!
+          </p>
+          <div class="project-link"><a target="_blank" href="https://contribute-app.herokuapp.com"><i class="fa fa-laptop" aria-hidden="true"></i> Take a look at the app</a></div>
+          <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/contribute"><i class="devicon-github-plain"></i> View the code on Github</a></div>
+        </div>
+      </div>
+
+      <div id="contribute" class="project-container" hidden>
+        <div class="display-container">
+          <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
+          <h2>contribute</h2>
+          <div class="project-imgs-container">
+            <img src="images/contribute-mac.png">
+          </div>
+          <h3>project summary</h3>
+          <p class="project-intro">
+            Contribute is the community moderated commenting platform. Built over the course of a week as my final project for the General Assembly Web Development Immersive, the aim of contribute is to minimise the voice and exposure of trolls and abusive users in online comments threads. This is achieved by subjecting the comments of new or untrusted users to review by other members of the commenting community before they are posted online. These reviews are conducted at the same time as posting a comment - So when a user is posting a comment, they may first be asked to review another users comment before their own is submitted. A reputation system ensures that trusted users are able to post their comments freely without review.
+          </p>
+          <p class="project-intro">
+            The project was built as a third party JavaScript widget: adding Contribute comment threads to a site is as simple as including a small embed script in the HTML. This embed script handles importing all the required JS and CSS dependencies, along with the main Backbone.js app. On the server side, comments threads are identified by the requesting URL - allowing a new comments thread to be created whenever a request is made from a new URL on a registered domain. The platform uses a rails backend to store and handle all requests.
+          </p>
+          <h3>check it out</h3>
+          <div class="project-link"><a target="_blank" href="https://contribute-app.herokuapp.com"><i class="fa fa-laptop" aria-hidden="true"></i> Take a look at the app</a></div>
+          <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/contribute"><i class="devicon-github-plain"></i> View the code on Github</a></div>
+          <h3>built with</h3>
+          <div class="technology-icon-container">
+            <div class="technology-icon"><i class="devicon-backbonejs-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-bootstrap-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-heroku-original"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-rails-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-ruby-plain"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="gipht" class="project-container" hidden>
+        <div class="display-container">
+          <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
+          <h2>gipht</h2>
+          <div class="project-imgs-container">
+            <img src="images/gipht-mac.png">
+          </div>
+          <h3>project summary</h3>
+          <p class="project-intro">
+            Gipht is the purely gif based chat app! I built Gipht over a week-long period as my first major project while studying General Assembly’s Web Development Immersive Course. An entirely Rails based app, Gipht allows users to record and save gifs of themselves directly from the browser, and then share these gifs by sending them to friends in private or group conversations. The app also leverages the Giphy API to allow “translating” of text snippets to gif’s as an alternative method of communication. The app is fully responsive and functional on most mobile devices.
+          </p>
+          <p class="project-intro">
+            I’m currently working on rebuilding Gipht as a React app served by a Rails API, with the aim of eventually developing it as a native mobile app using React Native.
+          </p>
+          <h3>check it out</h3>
+          <div class="project-link"><a target="_blank" href="https://gipht.herokuapp.com"><i class="fa fa-laptop" aria-hidden="true"></i> Take a look at the app</a></div>
+          <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/gipht"><i class="devicon-github-plain"></i> View the code on Github</a></div>
+          <h3>built with</h3>
+          <div class="technology-icon-container">
+            <div class="technology-icon"><i class="devicon-amazonwebservices-original"></i></div>
+            <div class="technology-icon"><i class="devicon-bootstrap-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-heroku-original"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-rails-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-ruby-plain"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="glance" class="project-container" hidden>
+        <div class="display-container">
+          <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
+          <h2>glance</h2>
+          <div class="project-imgs-container">
+            <img src="images/glance-mac.png">
+          </div>
+          <h3>project summary</h3>
+          <p class="project-intro">
+            Glance is an educational app developed in collaboration with two of my classmates from General Assembly (Ian and Emily). Built with Rails and Backbone.js, the app is a flash-card based learning tool, allowing users to create and share flash cards, assemble them into decks of cards, then test themselves and track their learning. Users are also able to browse others decks, and mark decks as ‘favourites’, so that they can easily locate and play them.
+          </p>
+          <h3>check it out</h3>
+          <div class="project-link"><a target="_blank" href="http://wdi-glance.herokuapp.com/"><i class="fa fa-laptop" aria-hidden="true"></i> Take a look at the app</a></div>
+          <div class="project-link"><a target="_blank" href="https://github.com/ianlenehan/flashcards"><i class="devicon-github-plain"></i> View the code on Github</a></div>
+          <h3>built with</h3>
+          <div class="technology-icon-container">
+            <div class="technology-icon"><i class="devicon-backbonejs-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-bootstrap-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-heroku-original"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-rails-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-ruby-plain"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="spaced" class="project-container" hidden>
+        <div class="display-container">
+          <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
+          <h2>spaced</h2>
+          <div class="project-imgs-container">
+            <img src="images/spaced-mac.png">
+          </div>
+          <h3>project summary</h3>
+          <p class="project-intro">
+            You’ll probably recognise this one - it makes up the interactive part of this portfolio! I created spaced just as a bit of fun towards the end of my first project week at General Assembly. More than anything, the project is simply an experiment of the possibilities of building a purely JavaScript based game without utilising any major game-development frameworks. As such, the game is built only in vanilla JavaScript, along with a little jQuery. The game is still a work in progress - with obvious improvements to be made, such as migrating the animation to HTML canvas.</p>
+          <h3>check it out</h3>
+          <div class="project-link"><a target="_blank" href="http://twosmalltrees.github.io/spaced/"><i class="fa fa-laptop" aria-hidden="true"></i> Play the game</a></div>
+          <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/spaced"><i class="devicon-github-plain"></i> View the code on Github</a></div>
+          <h3>built with</h3>
+          <div class="technology-icon-container">
+            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tic-tac-toe" class="project-container" hidden>
+        <div class="display-container">
+          <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
+          <h2>tic tac toe</h2>
+          <div class="project-imgs-container">
+            <img src="images/tic-tac-toe-mac.png">
+          </div>
+          <h3>project summary</h3>
+          <p class="project-intro">
+            Tic Tac Toe was an introductory project I developed during the WDI course at General Assembly. As you might guess, the project is a fairly simple tic tac toe game, created with only JavaScript, jQuery, HTML and CSS, although I’ve added a couple of extra features to the game to spice it up a little - You’re able to change the board size for a more strategic game, and can also elect to play against an unbeatable (on a 3x3 board) computer opponent.
+          </p>
+          <h3>check it out</h3>
+          <div class="project-link"><a target="_blank" href="http://twosmalltrees.github.io/TicTacToe/"><i class="fa fa-laptop" aria-hidden="true"></i> Play the game</a></div>
+          <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/TicTacToe"><i class="devicon-github-plain"></i> View the code on Github</a></div>
+          <h3>built with</h3>
+          <div class="technology-icon-container">
+            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </body>
 </html>
