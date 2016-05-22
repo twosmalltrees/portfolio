@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -14,19 +15,26 @@
 
     <div id="welcome-container" hidden>
       <div id="welcome-message">
-        <span class="welcome-small-text">you've stumbled upon the portolfio of</span>
+        <span class="welcome-small-text">you've stumbled upon the portfolio of</span>
         <h1 class="welcome-big-text">HARRISON REID</h1>
         <span class="welcome-small-text" >web developer</span>
         <div id="view-options" hidden>
-          <span class="view-option-btn" id="start-game">fun view</span>
-          <span class="view-option-btn" id="quick-view">quick view</span>
+          <span class="view-option-btn" id="start-game">fun version</span>
+          <span class="view-option-btn" id="quick-view">quick version</span>
         </div>
       </div>
       <div id="controls" hidden>
+        <p>You're the rocket. Fly the rocket!</p>
+        <br/>
         <img src="images/controls.svg">
       </div>
-      <div id="legend">
-
+      <div id="legend" hidden>
+        <p>These are my projects.</p>
+        <p>Shoot them a few times to open them up.</p>
+        <img src="images/legend.png">
+      </div>
+      <div id="go" hidden>
+        <p>Get going!</p>
       </div>
     </div>
 
@@ -43,21 +51,29 @@
           <img id="profile-image" src="images/face-bordered.png"><h2 id="my-name">Harrison Reid</h2>
           <h3>about me</h3>
           <p>
-            Hey there, I’m Harrison - a full stack web developer. I like writing code, get kicks out of good design, and love bringing the two together to create unique online experiences. I’ve recently graduated from from General Assembly Sydney, having studied the Web Development Immersive - a 3 month bootcamp style course learning web development all day every day. If you want to see the kind of work I’ve been doing, check out the projects below!
+            Hey there, I’m Harrison - a full stack web developer. I like writing code, get kicks out of good design, and love bringing the two together to create unique online experiences. I’ve recently graduated from from General Assembly Sydney, having studied the Web Development Immersive - a 3 month bootcamp style course learning web development all day every day. If you want to see the kind of work I’ve been doing, check out my projects!
           </p>
           <h3>contact</h3>
           <p>
-            I’m currently looking to find a position within a friendly, passionate team. A role that feeds my creative side, and keeps pushing my development as a programmer. If you've got anything available, please feel free to get in touch with me through any of the methods below!
+            I’m currently looking to find a position within a friendly, passionate team. A role that feeds my creative side, and keeps pushing my development as a programmer. If you've got anything available, or just want to chat, please feel free to get in touch with me through any of the methods below:
           </p>
-          <div class="project-link"><a target="_blank" href="https://contribute-app.herokuapp.com"><i class="fa fa-laptop" aria-hidden="true"></i> Take a look at the app</a></div>
-          <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/contribute"><i class="devicon-github-plain"></i> View the code on Github</a></div>
+          <div id="contact-links">
+            <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees"><i class="devicon-github-plain"></i> Github</a></div>
+            <div class="project-link"><a target="_blank" href="https://twitter.com/_twosmalltrees"><i class="fa fa-twitter" aria-hidden="true"></i></i> Twitter</a></div>
+            <div class="project-link"><a target="_blank" href="https://twitter.com/_twosmalltrees"><i class="fa fa-linkedin" aria-hidden="true"></i></i> LinkedIn</a></div>
+            <div class="project-link"><a href='ma&#105;&#108;to&#58;h&#97;rr&#105;s&#111;&#37;&#54;E&#64;twosm%6&#49;l%6&#67;%&#55;&#52;re&#101;s&#46;com'><i class="fa fa-laptop" aria-hidden="true"></i> &#104;ar&#114;is&#111;n&#64;twos&#109;a&#108;lt&#114;ees&#46;&#99;om</a></div>
+          </div>
+
+          <div id="to-projects">
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+          </div>
         </div>
       </div>
 
       <div id="contribute" class="project-container" hidden>
         <div class="display-container">
           <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
-          <h2>contribute</h2>
+          <h2>Contribute</h2>
           <div class="project-imgs-container">
             <img src="images/contribute-mac.png">
           </div>
@@ -73,16 +89,16 @@
           <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/contribute"><i class="devicon-github-plain"></i> View the code on Github</a></div>
           <h3>built with</h3>
           <div class="technology-icon-container">
-            <div class="technology-icon"><i class="devicon-backbonejs-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-bootstrap-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-heroku-original"></i></div>
-            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-backbonejs-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-bootstrap-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-heroku-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain-wordmark"></i></div>
             <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-rails-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-ruby-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-rails-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-ruby-plain-wordmark"></i></div>
           </div>
         </div>
       </div>
@@ -90,13 +106,14 @@
       <div id="gipht" class="project-container" hidden>
         <div class="display-container">
           <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
-          <h2>gipht</h2>
+          <h2>Gipht</h2>
           <div class="project-imgs-container">
             <img src="images/gipht-mac.png">
+            <img src="images/gipht-chat.png">
           </div>
           <h3>project summary</h3>
           <p class="project-intro">
-            Gipht is the purely gif based chat app! I built Gipht over a week-long period as my first major project while studying General Assembly’s Web Development Immersive Course. An entirely Rails based app, Gipht allows users to record and save gifs of themselves directly from the browser, and then share these gifs by sending them to friends in private or group conversations. The app also leverages the Giphy API to allow “translating” of text snippets to gif’s as an alternative method of communication. The app is fully responsive and functional on most mobile devices.
+            Gipht is the purely gif based chat app! I built Gipht over a week-long period as my first major project while studying General Assembly’s Web Development Immersive Course. Gipht allows users to record and save gifs of themselves directly from the browser, and then share these gifs by sending them to friends in private or group conversations. The app also leverages the Giphy API to allow “translating” of text snippets to gif’s as an alternative method of communication. The app is fully responsive and functional on most mobile devices.
           </p>
           <p class="project-intro">
             I’m currently working on rebuilding Gipht as a React app served by a Rails API, with the aim of eventually developing it as a native mobile app using React Native.
@@ -106,16 +123,16 @@
           <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/gipht"><i class="devicon-github-plain"></i> View the code on Github</a></div>
           <h3>built with</h3>
           <div class="technology-icon-container">
-            <div class="technology-icon"><i class="devicon-amazonwebservices-original"></i></div>
-            <div class="technology-icon"><i class="devicon-bootstrap-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-heroku-original"></i></div>
-            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-amazonwebservices-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-bootstrap-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-heroku-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain-wordmark"></i></div>
             <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-rails-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-ruby-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-rails-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-ruby-plain-wordmark"></i></div>
           </div>
         </div>
       </div>
@@ -123,9 +140,11 @@
       <div id="glance" class="project-container" hidden>
         <div class="display-container">
           <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
-          <h2>glance</h2>
+          <h2>Glance</h2>
           <div class="project-imgs-container">
             <img src="images/glance-mac.png">
+            <!-- TODO: Make this card interactive -->
+            <img src="images/glance-card-2.png">
           </div>
           <h3>project summary</h3>
           <p class="project-intro">
@@ -136,16 +155,16 @@
           <div class="project-link"><a target="_blank" href="https://github.com/ianlenehan/flashcards"><i class="devicon-github-plain"></i> View the code on Github</a></div>
           <h3>built with</h3>
           <div class="technology-icon-container">
-            <div class="technology-icon"><i class="devicon-backbonejs-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-bootstrap-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-heroku-original"></i></div>
-            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-backbonejs-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-bootstrap-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-heroku-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain-wordmark"></i></div>
             <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-rails-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-ruby-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-rails-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-ruby-plain-wordmark"></i></div>
           </div>
         </div>
       </div>
@@ -153,9 +172,10 @@
       <div id="spaced" class="project-container" hidden>
         <div class="display-container">
           <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
-          <h2>spaced</h2>
+          <h2>Spaced</h2>
           <div class="project-imgs-container">
             <img src="images/spaced-mac.png">
+            <img src="images/rocket-logo-3.png" id="rocket-logo">
           </div>
           <h3>project summary</h3>
           <p class="project-intro">
@@ -165,11 +185,11 @@
           <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/spaced"><i class="devicon-github-plain"></i> View the code on Github</a></div>
           <h3>built with</h3>
           <div class="technology-icon-container">
-            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain-wordmark"></i></div>
             <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain-wordmark"></i></div>
           </div>
         </div>
       </div>
@@ -177,28 +197,32 @@
       <div id="tic-tac-toe" class="project-container" hidden>
         <div class="display-container">
           <div class="close-project"><i class="fa fa-times" aria-hidden="true"></i></div>
-          <h2>tic tac toe</h2>
+          <h2>Tic Tac Toe</h2>
           <div class="project-imgs-container">
             <img src="images/tic-tac-toe-mac.png">
           </div>
           <h3>project summary</h3>
           <p class="project-intro">
-            Tic Tac Toe was an introductory project I developed during the WDI course at General Assembly. As you might guess, the project is a fairly simple tic tac toe game, created with only JavaScript, jQuery, HTML and CSS, although I’ve added a couple of extra features to the game to spice it up a little - You’re able to change the board size for a more strategic game, and can also elect to play against an unbeatable (on a 3x3 board) computer opponent.
+            Tic Tac Toe was an introductory project I developed during the WDI course at General Assembly. As you might guess, the project is a fairly simple tic tac toe game, created with only JavaScript, jQuery, HTML and CSS, although I’ve added a couple of extra features to the game to spice it up a little - you’re able to change the board size for a more strategic game, and can also elect to play against an unbeatable (on a 3x3 board) computer opponent.
           </p>
           <h3>check it out</h3>
           <div class="project-link"><a target="_blank" href="http://twosmalltrees.github.io/TicTacToe/"><i class="fa fa-laptop" aria-hidden="true"></i> Play the game</a></div>
           <div class="project-link"><a target="_blank" href="https://github.com/twosmalltrees/TicTacToe"><i class="devicon-github-plain"></i> View the code on Github</a></div>
           <h3>built with</h3>
           <div class="technology-icon-container">
-            <div class="technology-icon"><i class="devicon-css3-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-github-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-html5-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-css3-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-github-plain-wordmark"></i></div>
+            <div class="technology-icon"><i class="devicon-html5-plain-wordmark"></i></div>
             <div class="technology-icon"><i class="devicon-javascript-plain"></i></div>
-            <div class="technology-icon"><i class="devicon-jquery-plain"></i></div>
+            <div class="technology-icon"><i class="devicon-jquery-plain-wordmark"></i></div>
           </div>
         </div>
       </div>
 
+    </div>
+    <!-- So explosions show up on first hit -->
+    <div id="preload" hidden>
+      <img src="images/explosion.png">
     </div>
   </body>
 </html>

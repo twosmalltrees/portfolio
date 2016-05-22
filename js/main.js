@@ -146,13 +146,15 @@ Project = {
     }
 
     $(project.element).css({
-      'z-index': '10000000000000000',
+      'zIndex': '2',
       'transform': 'scale(' + scale + ')'
     });
 
     setTimeout(function() {
       $('#main-content').show();
-      $('#' + Project.currentlyViewing.projectName ).fadeTo(1000, 1);
+      $('#' + Project.currentlyViewing.projectName ).fadeTo(1000, 1, function() {
+        $('#game-window').height( $('#main-content').height() );
+      });
     }, 1000);
 
     project.size = 40;
@@ -162,17 +164,24 @@ Project = {
 
   shrinkBlob: function(project) {
     project.isHittable = true;
+
     $(project.element).css({
       'transform': 'scale(1)',
       'width': project.size +'px',
-      'height': project.size +'px'
+      'height': project.size +'px',
     });
+
+    setTimeout(function() {
+      $(project.element).css({
+        'zIndex' : 1
+      });
+    }, 300);
 
     if (project.projectName === "about-me") {
       console.log("about me shrink ran");
       setTimeout(function() {
         $(project.element).css({
-          'background-image': 'url(../portfolio/images/me.png)',
+          'background-image': 'url(../images/me.png)',
         });
       }, 450);
     }
@@ -595,21 +604,55 @@ Welcome = {
     // Fade in the controls image
     setTimeout(function() {
       $('#controls').fadeTo(500, 1);
-    }, 700);
+    }, 750);
 
     setTimeout(function() {
       $('#controls').fadeTo(500, 0, function() {
         $('#controls').hide();
       });
-    }, 3000);
+    }, 4250);
 
-    Welcome.startGame();
+    setTimeout(function() {
+      $('#legend').fadeTo(500, 1, function() {
+        setTimeout(function() {
+          $('#legend').fadeTo(500, 0, function() {
+            $('#legend').hide();
+            $('#welcome-container').css({
+              'top': '37vh'
+            });
+          });
+        }, 3500);
+      });
+    }, 5000);
+
+    setTimeout(function() {
+      $('#go').fadeTo(500, 1, function() {
+        Welcome.startGame();
+        setTimeout(function() {
+          $('#go').fadeTo(500, 0, function() {
+            $('#go').hide();
+            $('.welcome-small-text').first().hide();
+            $('#view-options').hide();
+            $('.welcome-big-text').css({
+              "color": "#2C7FB7"
+            });
+            $('.welcome-small-text').css({
+              "color": "#2C7FB7"
+            });
+            $('#welcome-message').fadeTo(500, 1);
+          });
+        }, 3500);
+      });
+    }, 9500);
+
+
   },
 
   showAllProjects: function() {
     // $('#game-window').css({'overflow':'scroll'});
     $('body').css({
-      "overflow-y": "scroll"
+      "overflow-y": "scroll",
+      "-webkit-overflow-scrolling": "touch"
     });
     $('.close-project').hide();
     $('.project-container').show();
@@ -639,31 +682,63 @@ Welcome = {
     }
 
     $('#game-window').fadeTo(1500, 1);
-  }
+  },
 
 };
 
+var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};
+
 $(document).ready(function() {
-  setTimeout(function() {
-    Welcome.showWelcome();
-  }, 500);
 
-  $('#start-game').on('click', function(){
-    Welcome.showIntroSequence();
-  });
-
-  $('#quick-view').on('click', function() {
+// Only show game for non mobile browsers
+  if (isMobile.any()) {
     Welcome.showAllProjects();
-  });
+  } else {
+    setTimeout(function() {
+      Welcome.showWelcome();
+    }, 500);
 
-  // Listen for click on close buttons
-  $('.close-project').on('click', function() {
-    console.log("close project called");
-    $('#' + Project.currentlyViewing.projectName ).fadeTo(500, 0, function() {
-      $('#main-content').hide();
-      Project.shrinkBlob(Project.currentlyViewing, function() {});
+    $('#start-game').on('click', function(){
+      Welcome.showIntroSequence();
     });
-  });
+
+    $('#quick-view').on('click', function() {
+      Welcome.showAllProjects();
+    });
+
+    // Listen for click on close buttons
+    $('.close-project').on('click', function() {
+      console.log("close project called");
+      $("#main-content").animate({ top: "0px" });
+      $('#' + Project.currentlyViewing.projectName ).fadeTo(500, 0, function() {
+        $('#main-content').hide();
+        //  Fix for issue with overflow area outside game-window
+        $('#game-window').animate({"height": $(window).height() + 'px' }, 200);
+        Project.shrinkBlob(Project.currentlyViewing, function() {});
+      });
+    });
+  }
+
+
 });
 
 // The Below Code Runs The Game On Page Ready... Re Implement Later

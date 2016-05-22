@@ -7,6 +7,7 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
+  z-index: 0;
   background-color: #3498db;
   overflow-x: hidden;
 }
@@ -21,6 +22,7 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
+  z-index: -1;
 }
 
 html {
@@ -41,22 +43,22 @@ html {
   position: absolute;
   width: 40px;
   height: 40px;
-  z-index: 1000;
+  z-index: 1;
   border: 5px solid white;
   border-radius: 50%;
   transition: transform 0.6s, width 0.4s, height 0.4s, background-image 0.3s;;
 }
 
 .gipht {
-  background-color: #2ecc71;
+  background-color: #2ECC4A;
 }
 
 .tic-tac-toe {
-  background-color: #f39c12;
+  background-color: #E88300;
 }
 
 .contribute {
-  background-color: #D6653E;
+  background-color: #AA3A2B;
 }
 
 .spaced {
@@ -127,12 +129,12 @@ html {
   top: 37vh;
   transition: top 1s;
   text-align: center;
+  z-index: -2;
   /*to prevent annoying fadeTo animation jump in Safari*/
   -webkit-font-smoothing: antialiased;
 }
 
 #welcome-container img{
-  margin-top: 80px;
   width: 400px;
 }
 #view-options{
@@ -202,6 +204,7 @@ html {
 .project-imgs-container {
   display: flex;
   justify-content: left;
+  flex-wrap: wrap;
   max-width: 100%;
   margin: 0 0 -65px 0;
 }
@@ -226,17 +229,17 @@ html {
 
 
 #contribute {
-  background-color: #D6653E;
+  background-color: #AA3A2B;
   z-index: 1000000000000;
 }
 
 #tic-tac-toe {
-  background-color: #f39c12;
+  background-color: #E88300;
   z-index: 1000000000000;
 }
 
 #gipht {
-  background-color: #2ecc71;
+  background-color: #2ECC4A;
   z-index: 1000000000000;
 }
 
@@ -256,7 +259,9 @@ html {
   left: 0;
   width: 100vw;
   min-height: 100vh;
+  z-index: 0;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 #main-content h2 {
@@ -296,7 +301,7 @@ html {
   font-family: "Roboto";
   font-size: 20px;
   text-align: left;
-  margin-bottom: 8px;
+  margin: 21px 0 0px 0;
 }
 
 .project-link a {
@@ -335,4 +340,74 @@ h2#my-name{
   font-weight: 300;
   text-align: justify;
   color: black;
+}
+
+#about-me .project-link a {
+  font-family: "Roboto";
+  font-size: 18px;
+  text-decoration: none;
+  color: #717171;
+  letter-spacing: 0.6px;
+  transition: color 0.4s;
+}
+
+#about-me .project-link a:hover {
+  color: black;
+}
+
+#welcome-container p {
+  font-family: "Montserrat";
+  font-size: 20px;
+  color: white;
+}
+
+#go p {
+  font-family: "Montserrat";
+  font-size: 40px;
+  color: white;
+}
+
+#contact-links {
+  margin: 40px 0 60px 0;
+}
+
+#to-projects {
+  font-size: 50px;
+  margin-bottom: 60px;
+}
+
+#to-projects i {
+  padding: 15px;
+  border: 7px solid #B34646;
+  border-radius: 50%;
+}
+
+
+@media screen  and (max-width: 979px) /* Tablet */ {
+     .project-container {
+       padding: 0px 15px 20px 15px;
+        box-sizing: border-box;
+     }
+
+     #main-content h2 {
+       text-align: center;
+     }
+
+     #main-content h3 {
+       text-align: center;
+     }
+
+     .technology-icon-container {
+       justify-content: space-around;
+     }
+
+     .project-intro {
+        font-family: "Roboto";
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        line-height: 25px;
+        font-weight: 300;
+        text-align: justify;
+    }
+
 }
