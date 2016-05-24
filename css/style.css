@@ -170,9 +170,12 @@ html {
   border: 2px solid white;
   border-radius: 20px;
   cursor: pointer;
-
+  transition: background-color 0.5s;
 }
 
+.view-option-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
 
 
 .project-container {
